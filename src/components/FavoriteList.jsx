@@ -1,27 +1,12 @@
 // src/components/FavoriteList.jsx
 import { useEffect, useState } from "react";
-import { db } from "../firebase/config";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { getFavorites, handleDelete } from "../actions/actions";
 
 const FavoriteList = () => {
   const [favorites, setFavorites] = useState([]);
 
-  const getFavorites = async () => {
-    const favCollection = await getDocs(collection(db, "favorites"));
-    const favs = favCollection.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setFavorites(favs);
-  };
-
-  const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "favorites", id));
-    getFavorites(); // odśwież listę
-  };
-
   useEffect(() => {
-    getFavorites();
+    getFavorites(setFavorites);
   }, []);
 
   return (
@@ -35,7 +20,7 @@ const FavoriteList = () => {
             <strong> {coin.name} </strong> – {coin.price} USD
             <button
               style={{ marginLeft: "1rem" }}
-              onClick={() => handleDelete(coin.id)}
+              onClick={() => handleDelete(coin.id, setFavorites)}
             >
               ❌ Usuń
             </button>

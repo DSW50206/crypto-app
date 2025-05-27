@@ -5,7 +5,7 @@ import FavoriteList from "./components/FavoriteList";
 function App() {
   return (
     <Router>
-      <div style={{ padding: "1rem" }}>
+      <div style={{ padding: "1rem", width:'100%'}}>
         <h1>CryptoApp 💰</h1>
         <nav style={{ marginBottom: "2rem" }}>
           <Link to="/" style={{ marginRight: "1rem" }}>
